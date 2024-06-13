@@ -1,32 +1,4 @@
-class Animals{
 
-public static void main(String a[]){
-
-String animalName1="Elephant";
-int lifeSpan1=70;
-String animalName2="Cow";
-int lifeSpan2=22;
-
-System.out.println(animalName1);
-System.out.println(lifeSpan1);
-System.out.println(animalName2);
-System.out.println(lifeSpan2);
-
-}
-
-}
-
-
-
-
-
-
-
-
-
-
-
-package com.cognizant.bluebolt.gw.errorassist.app;
 
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -44,11 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * @author Cognizant
- * @see
- * @since 12-Mar-24
- **/
 public class ErrorAssistApplication extends Application {
 
     ListView<String> resultListView = new ListView<>();
@@ -100,6 +67,20 @@ public class ErrorAssistApplication extends Application {
         noResultLabel.setVisible(false);
 
 
+resultsTableView = new TableView<>();
+        TableColumn<LabelValuePair, String> labelColumn = new TableColumn<>("Label");
+        labelColumn.setCellValueFactory(new PropertyValueFactory<>("label"));
+        TableColumn<LabelValuePair, String> valueColumn = new TableColumn<>("Value");
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        resultsTableView.getColumns().addAll(labelColumn, valueColumn);
+
+        resultsTableView.setFixedCellSize(25);
+
+        gridPane.add(resultsTableView, 0, 3, 3, 1);
+        GridPane.setHalignment(resultsTableView, HPos.CENTER); // Center-align the TableView
+
+        
+        
         gridPane.add(resultLayout, 0, 4, 3, 1);
         Scene scene = new Scene(gridPane, 600, 400);
 
@@ -137,7 +118,32 @@ public class ErrorAssistApplication extends Application {
 
 
     }
+private void setupTableView(List<ErrorAssistTO> resultList)
+    {
+        if(resultList != null && resultList.size() > 0) {
+            //For now take only the first row
+            ErrorAssistTO errorAssistTO = resultList.get(0);
+            if (errorAssistTO != null) {
+                LabelValuePair lvp1 = new LabelValuePair("Application", errorAssistTO.applicationName);
+                LabelValuePair lvp2 = new LabelValuePair("Applies To", errorAssistTO.versions);
+                LabelValuePair lvp3 = new LabelValuePair("Error Code", errorAssistTO.errorCode);
+                LabelValuePair lvp4 = new LabelValuePair("Description", errorAssistTO.description);
+                LabelValuePair lvp5 = new LabelValuePair("Cause", errorAssistTO.cause);
+                LabelValuePair lvp6 = new LabelValuePair("Solution", errorAssistTO.solution);
+                LabelValuePair lvp7 = new LabelValuePair("Other Comments", errorAssistTO.otherComments);
+                LabelValuePair lvp8 = new LabelValuePair("Source", errorAssistTO.source);
+                LabelValuePair lvp9 = new LabelValuePair("Last Updated", errorAssistTO.lastUpdated);
+                resultsTableView.getItems().addAll(lvp1, lvp2, lvp3, lvp4, lvp5, lvp6, lvp7, lvp8, lvp9);
+            }
+        }
+        else
+        {
+            System.out.println("I am here");
+            LabelValuePair lvp1 = new LabelValuePair("Application", "TEST_VALUE");
+            resultsTableView.getItems().add(lvp1);
+        }
 
+    }
     private String[] performSearch(String query) {
         List<String> results = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\2114779\\IdeaProjects\\JavaP\\Error.csv"))) {
@@ -245,63 +251,6 @@ private String[] performSearch(String query) throws SQLException {
 }
 }
 
-
-
- /*
-        resultsTableView = new TableView<>();
-        TableColumn<LabelValuePair, String> labelColumn = new TableColumn<>("Label");
-        labelColumn.setCellValueFactory(new PropertyValueFactory<>("label"));
-        TableColumn<LabelValuePair, String> valueColumn = new TableColumn<>("Value");
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-        resultsTableView.getColumns().addAll(labelColumn, valueColumn);
-
-        resultsTableView.setFixedCellSize(25);
-
-        gridPane.add(resultsTableView, 0, 3, 3, 1);
-        GridPane.setHalignment(resultsTableView, HPos.CENTER); // Center-align the TableView
-
-
-         */
-
-
-/*
-
-    private void setupTableView(List<ErrorAssistTO> resultList)
-    {
-        if(resultList != null && resultList.size() > 0) {
-            //For now take only the first row
-            ErrorAssistTO errorAssistTO = resultList.get(0);
-            if (errorAssistTO != null) {
-                LabelValuePair lvp1 = new LabelValuePair("Application", errorAssistTO.applicationName);
-                LabelValuePair lvp2 = new LabelValuePair("Applies To", errorAssistTO.versions);
-                LabelValuePair lvp3 = new LabelValuePair("Error Code", errorAssistTO.errorCode);
-                LabelValuePair lvp4 = new LabelValuePair("Description", errorAssistTO.description);
-                LabelValuePair lvp5 = new LabelValuePair("Cause", errorAssistTO.cause);
-                LabelValuePair lvp6 = new LabelValuePair("Solution", errorAssistTO.solution);
-                LabelValuePair lvp7 = new LabelValuePair("Other Comments", errorAssistTO.otherComments);
-                LabelValuePair lvp8 = new LabelValuePair("Source", errorAssistTO.source);
-                LabelValuePair lvp9 = new LabelValuePair("Last Updated", errorAssistTO.lastUpdated);
-                resultsTableView.getItems().addAll(lvp1, lvp2, lvp3, lvp4, lvp5, lvp6, lvp7, lvp8, lvp9);
-            }
-        }
-        else
-        {
-            System.out.println("I am here");
-            LabelValuePair lvp1 = new LabelValuePair("Application", "TEST_VALUE");
-            resultsTableView.getItems().add(lvp1);
-        }
-
-    }
-
-
- */
-
-
-
-/*
-
-
-
         public class LabelValuePair {
             private final String label;
             private final String value;
@@ -324,4 +273,4 @@ private String[] performSearch(String query) throws SQLException {
     }
 
 
- */
+ 
